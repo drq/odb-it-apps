@@ -5,6 +5,22 @@ spring:
     host: localhost # RabbitMQ host.
     port: 5672
 odbitappsrabbitmq:
-  queueName: dnp3/control
-  topicExchangeName: odbitappsrabbitmq-dnp3-exchange
-  payload: '{"DCTE.WinTms.AI55": 15}'
+  publish:
+    queueName: itapps/point
+    payload: '{"DCTE.WinTms.AI55": 15}'
+    routingKey: dnp3.point
+    topicExchangeName: itapps-dnp3-pub-exchange
+  subscribe:
+    queueName: itapps/control
+    topicExchangeName: itapps-dnp3-sub-exchange
+    routingKey: dnp3.#
+---
+spring:
+  config:
+    activate:
+      on-profile: LOCAL
+odbitappsrabbitmq:
+  subscribe:
+    queueName: itapps/point
+    topicExchangeName: itapps-dnp3-pub-exchange
+

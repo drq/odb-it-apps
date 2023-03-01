@@ -1,5 +1,7 @@
 package org.odb.it.apps.rabbitmq;
 
+import org.odb.it.apps.rabbitmq.config.RabbitMQConfig;
+import org.odb.it.apps.rabbitmq.config.RabbitMQPubConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Binding;
@@ -10,7 +12,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
@@ -20,38 +22,45 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
 @EnableScheduling
+@EnableConfigurationProperties({RabbitMQConfig.class})
 public class OdbItAppsRabbitmqConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(OdbItAppsRabbitmqConfig.class);
 
-    @Value("${odbitappsrabbitmq.queueName}")
-    private String queueName;
-
-    @Value("${odbitappsrabbitmq.topicExchangeName}")
-    private String topicExchangeName;
-
-    @Value("${odbitappsrabbitmq.payload}")
-    private String payload;
-
     private final RabbitTemplate rabbitTemplate;
+    private final RabbitMQConfig rabbitMQConfig;
 
-    public OdbItAppsRabbitmqConfig(final RabbitTemplate rabbitTemplate) {
+    public OdbItAppsRabbitmqConfig(
+            final RabbitTemplate rabbitTemplate,
+            final RabbitMQConfig rabbitMQConfig
+            ) {
         this.rabbitTemplate = rabbitTemplate;
+        this.rabbitMQConfig = rabbitMQConfig;
     }
 
     @Bean
-    Queue dnp3ControlQueue() {
-        return new Queue(queueName, false);
+    Queue dnp3SubQueue() {
+        return new Queue(rabbitMQConfig.getSubscribe().getQueueName(), false);
     }
 
     @Bean
-    TopicExchange dnp3Exchange() {
-        return new TopicExchange(topicExchangeName);
+    Queue dnp3PubQueue() {
+        return new Queue(rabbitMQConfig.getPublish().getQueueName(), false);
     }
 
     @Bean
-    Binding binding(Queue dnp3ControlQueue, TopicExchange dnp3Exchange) {
-        return BindingBuilder.bind(dnp3ControlQueue).to(dnp3Exchange).with("dnp3.#");
+    TopicExchange dnp3SubExchange() {
+        return new TopicExchange(rabbitMQConfig.getSubscribe().getTopicExchangeName());
+    }
+
+    @Bean
+    TopicExchange dnp3PubExchange() {
+        return new TopicExchange(rabbitMQConfig.getPublish().getTopicExchangeName());
+    }
+
+    @Bean
+    Binding binding(Queue dnp3SubQueue, TopicExchange dnp3SubExchange) {
+        return BindingBuilder.bind(dnp3SubQueue).to(dnp3SubExchange).with(rabbitMQConfig.getSubscribe().getRoutingKey());
     }
 
     @Bean
@@ -61,7 +70,7 @@ public class OdbItAppsRabbitmqConfig {
     ) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
+        container.setQueueNames(rabbitMQConfig.getSubscribe().getQueueName());
         container.setMessageListener(listenerAdapter);
         return container;
     }
@@ -73,12 +82,16 @@ public class OdbItAppsRabbitmqConfig {
 
     @Scheduled(fixedDelay = 30000, initialDelay = 10000)
     public void scheduleMessagePublishTask() {
+        RabbitMQPubConfig rabbitMQPubConfig = rabbitMQConfig.getPublish();
+        String payload = rabbitMQPubConfig.getPayload();
+        String queueName = rabbitMQPubConfig.getQueueName();
+
         logger.info("=================================================================================");
         logger.info("Publishing message {} to {}", payload, queueName);
         logger.info("=================================================================================");
 
         Message<String> testMessage = MessageBuilder.withPayload(payload).setHeader("topic", queueName).build();
 
-        rabbitTemplate.convertAndSend(topicExchangeName, "dnp3.control", testMessage);
+        rabbitTemplate.convertAndSend(rabbitMQPubConfig.getTopicExchangeName(), rabbitMQPubConfig.getRoutingKey(), testMessage);
     }
 }
