@@ -30,9 +30,9 @@ spring:
       on-profile: VOLTTRON
   rabbitmq:
     host: localhost
-    port: 5671
+    port: 5672
     ssl:
-      enabled: true
+      enabled: false
       trust-store: file:/home/t1adm-y.qu@preprod.nationalgrid.com/dev/keys/client_truststore.jks
       trust-store-password: test1234!
       verify-hostname: false
