@@ -23,4 +23,17 @@ odbitappsrabbitmq:
   subscribe:
     queueName: itapps/point
     topicExchangeName: itapps-dnp3-pub-exchange
+---
+spring:
+  config:
+    activate:
+      on-profile: VOLTTRON
+  rabbitmq:
+    ssl:
+      enabled: true
+      algorithm: TLSv1.2
+odbitappsrabbitmq:
+  subscribe:
+    queueName: itapps/point
+    topicExchangeName: itapps-dnp3-pub-exchange
 
