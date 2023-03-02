@@ -31,7 +31,6 @@ spring:
   rabbitmq:
     ssl:
       enabled: true
-      algorithm: TLSv1.2
 odbitappsrabbitmq:
   subscribe:
     queueName: itapps/point
