@@ -29,10 +29,7 @@ spring:
     activate:
       on-profile: VOLTTRON
   rabbitmq:
-    port: 5672
-    username: AZUSE-ARIPP02-admin
-    password: default_passwd
-    virtual-host: volttron
+    port: 5671
 odbitappsrabbitmq:
   subscribe:
     queueName: itapps/point
