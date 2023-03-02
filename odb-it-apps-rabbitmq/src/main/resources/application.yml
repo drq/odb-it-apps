@@ -38,6 +38,7 @@ spring:
       verify-hostname: false
       key-store: file:/home/t1adm-y.qu@preprod.nationalgrid.com/dev/keys/client_keystore.p12
       key-store-password: client1234!
+      validate-server-certificate: false
 odbitappsrabbitmq:
   subscribe:
     queueName: itapps/point
