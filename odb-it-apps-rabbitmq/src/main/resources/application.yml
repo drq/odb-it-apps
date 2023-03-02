@@ -3,7 +3,6 @@ spring:
     name: OdbItAppsRabbitmq
   rabbitmq:
     host: localhost # RabbitMQ host.
-    port: 5672
 odbitappsrabbitmq:
   publish:
     queueName: itapps/point
