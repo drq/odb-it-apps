@@ -35,7 +35,6 @@ spring:
       enabled: true
       trust-store: file:/home/t1adm-y.qu@preprod.nationalgrid.com/dev/keys/client_truststore.jks
       trust-store-password: test1234!
-    virtual-host: volttron
 odbitappsrabbitmq:
   subscribe:
     queueName: itapps/point
