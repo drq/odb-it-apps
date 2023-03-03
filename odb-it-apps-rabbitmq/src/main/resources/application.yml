@@ -37,7 +37,7 @@ spring:
       key-store: file:/home/t1adm-y.qu@preprod.nationalgrid.com/dev/keys/client_keystore.p12
       key-store-password: client1234!
     username: client1
-    password: client1234!
+    password: client1
     virtual-host: volttron
 odbitappsrabbitmq:
   subscribe:
