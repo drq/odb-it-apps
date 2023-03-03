@@ -36,7 +36,8 @@ spring:
       verify-hostname: false
       key-store: file:/home/t1adm-y.qu@preprod.nationalgrid.com/dev/keys/client_keystore.p12
       key-store-password: client1234!
-      algorithm: TLSv1.2
+    username: AZUSE-ARIPP02-admin
+    password: default_passwd
 odbitappsrabbitmq:
   subscribe:
     queueName: itapps/point
