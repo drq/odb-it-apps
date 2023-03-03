@@ -28,7 +28,7 @@ spring:
     activate:
       on-profile: VOLTTRON
   rabbitmq:
-    host: localhost
+    host: AZUSE-ARIPP02
     ssl:
       enabled: true
       trust-store: file:/home/t1adm-y.qu@preprod.nationalgrid.com/dev/keys/client_truststore.jks
@@ -38,6 +38,7 @@ spring:
       key-store-password: client1234!
     username: AZUSE-ARIPP02-admin
     password: default_passwd
+    virtual-host: volttron
 odbitappsrabbitmq:
   subscribe:
     queueName: itapps/point
