@@ -43,7 +43,7 @@ odbitappsrabbitmq:
   subscribe:
     queueName: itapps/point
     topicExchangeName: itapps-dnp3-pub-exchange
-logging:
-  level:
-    org.springframework: trace
-    com.rabbitmq: trace
+#logging:
+#  level:
+#    org.springframework: trace
+#    com.rabbitmq: trace
