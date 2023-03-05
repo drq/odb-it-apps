@@ -34,7 +34,7 @@ spring:
       trust-store: file:/opt/poc/keys/client_truststore.jks
       trust-store-password: test1234!
       verify-hostname: false
-      key-store: file:/opt/poc/dev/keys/client_keystore.p12
+      key-store: file:/opt/poc/keys/client_keystore.p12
       key-store-password: client1234!
     username: client1
     password: client1234!
