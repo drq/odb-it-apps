@@ -31,13 +31,13 @@ spring:
     host: AZUSE-ARIPP02
     ssl:
       enabled: true
-      trust-store: file:/home/t1adm-y.qu@preprod.nationalgrid.com/dev/keys/client_truststore.jks
+      trust-store: file:/opt/poc/keys/client_truststore.jks
       trust-store-password: test1234!
       verify-hostname: false
-      key-store: file:/home/t1adm-y.qu@preprod.nationalgrid.com/dev/keys/client_keystore.p12
+      key-store: file:/opt/poc/dev/keys/client_keystore.p12
       key-store-password: client1234!
     username: client1
-    password: client1
+    password: client1234!
     virtual-host: volttron
 odbitappsrabbitmq:
   subscribe:
