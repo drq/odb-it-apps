@@ -26,6 +26,15 @@ odbitappsrabbitmq:
 spring:
   config:
     activate:
+      on-profile: LOOP
+odbitappsrabbitmq:
+  subscribe:
+    queueName: itapps/point
+    topicExchangeName: itapps-dnp3-pub-exchange
+---
+spring:
+  config:
+    activate:
       on-profile: VOLTTRON
   rabbitmq:
     host: AZUSE-ARIPP02
@@ -39,11 +48,12 @@ spring:
     username: client1
     password: client1234!
     virtual-host: volttron
-odbitappsrabbitmq:
-  subscribe:
-    queueName: itapps/point
-    topicExchangeName: itapps-dnp3-pub-exchange
-#logging:
-#  level:
-#    org.springframework: trace
-#    com.rabbitmq: trace
+---
+spring:
+  config:
+    activate:
+      on-profile: DEBUG
+logging:
+  level:
+    org.springframework: trace
+    com.rabbitmq: trace
