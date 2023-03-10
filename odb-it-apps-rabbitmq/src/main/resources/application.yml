@@ -35,6 +35,20 @@ odbitappsrabbitmq:
 spring:
   config:
     activate:
+      on-profile: LOOP2
+odbitappsrabbitmq:
+  publish:
+    queueName: itapps/control
+    routingKey: dnp3.control
+    topicExchangeName: itapps-dnp3-sub-exchang
+  subscribe:
+    queueName: itapps/control
+    topicExchangeName: itapps-dnp3-sub-exchange
+    routingKey: dnp3.#
+---
+spring:
+  config:
+    activate:
       on-profile: VOLTTRON
   rabbitmq:
     host: AZUSE-ARIPP02
