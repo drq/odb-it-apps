@@ -40,7 +40,7 @@ odbitappsrabbitmq:
   publish:
     queueName: itapps/control
     routingKey: dnp3.control
-    topicExchangeName: itapps-dnp3-sub-exchang
+    topicExchangeName: itapps-dnp3-sub-exchange
   subscribe:
     queueName: itapps/control
     topicExchangeName: itapps-dnp3-sub-exchange
