@@ -18,7 +18,12 @@ public class OdbItAppsRabbitmqMessageReceiver {
 
     public void receiveMessage(Object message) {
         logger.info("=================================================================================");
-        logger.info("Received message: {} as {}", message, message.getClass().getName());
+        if (message instanceof byte[]) {
+            String messageAsString = new String((byte[]) message);
+            logger.info("Received binary message: {} as {}", message, messageAsString);
+        } else {
+            logger.info("Received message: {} as {}", message, message.getClass().getName());
+        }
         logger.info("=================================================================================");
     }
 }
