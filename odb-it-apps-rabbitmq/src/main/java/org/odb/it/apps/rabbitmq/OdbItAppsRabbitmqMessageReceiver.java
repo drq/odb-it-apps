@@ -18,7 +18,7 @@ public class OdbItAppsRabbitmqMessageReceiver {
 
     public void receiveMessage(Object message) {
         logger.info("=================================================================================");
-        logger.info("Received message: {}", message);
+        logger.info("Received message: {} as {}", message, message.getClass().getName());
         logger.info("=================================================================================");
     }
 }
