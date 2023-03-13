@@ -15,4 +15,10 @@ public class OdbItAppsRabbitmqMessageReceiver {
         logger.info("Received message: {} with headers {}", message.getPayload(), message.getHeaders());
         logger.info("=================================================================================");
     }
+
+    public void receiveMessage(Object message) {
+        logger.info("=================================================================================");
+        logger.info("Received message: {}", message);
+        logger.info("=================================================================================");
+    }
 }
