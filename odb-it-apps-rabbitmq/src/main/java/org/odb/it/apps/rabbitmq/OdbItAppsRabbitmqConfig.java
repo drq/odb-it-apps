@@ -76,11 +76,13 @@ public class OdbItAppsRabbitmqConfig {
         return container;
     }
 
+/*
     @Bean
     MessageListenerAdapter listenerAdapter(OdbItAppsRabbitmqMessageReceiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
-
+*/
+    
     @RabbitListener(queues = "itapps/control")
     public void consume(Message message) {
         logger.info("=================================================================================");
