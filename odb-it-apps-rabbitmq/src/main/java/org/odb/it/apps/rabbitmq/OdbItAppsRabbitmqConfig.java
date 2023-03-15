@@ -83,7 +83,7 @@ public class OdbItAppsRabbitmqConfig {
     }
 */
     
-    @RabbitListener(queues = "itapps/control")
+    @RabbitListener(queues = "${odbitappsrabbitmq.subscribe.queueName}")
     public void consume(Message<String> message) {
         logger.info("=================================================================================");
         logger.info("Received message: {} with headers {}", message.getPayload(), message.getHeaders());
