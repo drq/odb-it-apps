@@ -66,13 +66,13 @@ public class OdbItAppsRabbitmqConfig {
 
     @Bean
     SimpleMessageListenerContainer container(
-            ConnectionFactory connectionFactory,
-            MessageListenerAdapter listenerAdapter
+            ConnectionFactory connectionFactory//,
+            //MessageListenerAdapter listenerAdapter
     ) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(rabbitMQConfig.getSubscribe().getQueueName());
-        container.setMessageListener(listenerAdapter);
+        //container.setMessageListener(listenerAdapter);
         return container;
     }
 
