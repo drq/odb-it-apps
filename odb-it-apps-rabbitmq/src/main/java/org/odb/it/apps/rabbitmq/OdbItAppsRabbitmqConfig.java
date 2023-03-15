@@ -64,19 +64,19 @@ public class OdbItAppsRabbitmqConfig {
         return BindingBuilder.bind(dnp3SubQueue).to(dnp3SubExchange).with(rabbitMQConfig.getSubscribe().getRoutingKey());
     }
 
+/*
     @Bean
     SimpleMessageListenerContainer container(
-            ConnectionFactory connectionFactory//,
-            //MessageListenerAdapter listenerAdapter
+            ConnectionFactory connectionFactory,
+            MessageListenerAdapter listenerAdapter
     ) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(rabbitMQConfig.getSubscribe().getQueueName());
-        //container.setMessageListener(listenerAdapter);
+        container.setMessageListener(listenerAdapter);
         return container;
     }
 
-/*
     @Bean
     MessageListenerAdapter listenerAdapter(OdbItAppsRabbitmqMessageReceiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
@@ -84,7 +84,7 @@ public class OdbItAppsRabbitmqConfig {
 */
     
     @RabbitListener(queues = "itapps/control")
-    public void consume(Message message) {
+    public void consume(Message<String> message) {
         logger.info("=================================================================================");
         logger.info("Received message: {} with headers {}", message.getPayload(), message.getHeaders());
         logger.info("=================================================================================");
