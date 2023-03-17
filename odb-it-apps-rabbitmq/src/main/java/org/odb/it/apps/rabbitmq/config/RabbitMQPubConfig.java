@@ -8,4 +8,5 @@ public class RabbitMQPubConfig {
      private String topicExchangeName;
      private String payload;
      private String routingKey;
+     private String path;
 }

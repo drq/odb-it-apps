@@ -7,6 +7,7 @@ odbitappsrabbitmq:
   publish:
     queueName: itapps/point
     payload: '{"DCTE.WinTms.AI55": 15}'
+    path: 'campus/building/dnps'
     routingKey: dnp3.point
     topicExchangeName: itapps-dnp3-pub-exchange
   subscribe:

@@ -101,8 +101,9 @@ public class OdbItAppsRabbitmqConfig {
         logger.info("Publishing message {} to {}", payload, queueName);
         logger.info("=================================================================================");
 
-        Message<String> testMessage = MessageBuilder.withPayload(payload).setHeader("topic", queueName).build();
-
-        rabbitTemplate.convertAndSend(rabbitMQPubConfig.getTopicExchangeName(), rabbitMQPubConfig.getRoutingKey(), testMessage);
+        rabbitTemplate.convertAndSend(rabbitMQPubConfig.getTopicExchangeName(), rabbitMQPubConfig.getRoutingKey(), payload, m -> {
+            m.getMessageProperties().setHeader("path", rabbitMQPubConfig.getPath());
+            return m;
+        });
     }
 }
