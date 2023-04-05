@@ -21,6 +21,8 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.Random;
+
 @Configuration
 @EnableScheduling
 @EnableConfigurationProperties({RabbitMQConfig.class})
@@ -94,8 +96,16 @@ public class OdbItAppsRabbitmqConfig {
     @Scheduled(fixedDelay = 30000, initialDelay = 10000)
     public void scheduleMessagePublishTask() {
         RabbitMQPubConfig rabbitMQPubConfig = rabbitMQConfig.getPublish();
-        String payload = rabbitMQPubConfig.getPayload();
-        String queueName = rabbitMQPubConfig.getQueueName();
+        String[] payloads = rabbitMQPubConfig.getPayload().split(",");
+        String[] queueNames = rabbitMQPubConfig.getQueueName().split(",");
+
+        int size = payloads.length;
+
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(size);
+        int randomValue = rand.nextInt(100) + 1;
+        String queueName = queueNames[randomIndex];
+        String payload = payloads[randomIndex].replace("10", String.valueOf(randomValue));
 
         logger.info("=================================================================================");
         logger.info("Publishing message {} to {}", payload, queueName);
