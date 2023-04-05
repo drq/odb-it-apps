@@ -97,22 +97,23 @@ public class OdbItAppsRabbitmqConfig {
     public void scheduleMessagePublishTask() {
         RabbitMQPubConfig rabbitMQPubConfig = rabbitMQConfig.getPublish();
         String[] payloads = rabbitMQPubConfig.getPayload().split(",");
-        String[] queueNames = rabbitMQPubConfig.getQueueName().split(",");
+        String[] paths = rabbitMQPubConfig.getPath().split(",");
 
         int size = payloads.length;
 
         Random rand = new Random();
         int randomIndex = rand.nextInt(size);
         int randomValue = rand.nextInt(100) + 1;
-        String queueName = queueNames[randomIndex];
+        String path = paths[randomIndex];
         String payload = payloads[randomIndex].replace("10", String.valueOf(randomValue));
 
+        String queueName = rabbitMQPubConfig.getQueueName();
         logger.info("=================================================================================");
-        logger.info("Publishing message {} to {}", payload, queueName);
+        logger.info("Publishing message {} to {} with path {}", payload, queueName, path);
         logger.info("=================================================================================");
 
         rabbitTemplate.convertAndSend(rabbitMQPubConfig.getTopicExchangeName(), rabbitMQPubConfig.getRoutingKey(), payload, m -> {
-            m.getMessageProperties().setHeader("path", rabbitMQPubConfig.getPath());
+            m.getMessageProperties().setHeader("path", path);
             return m;
         });
     }
