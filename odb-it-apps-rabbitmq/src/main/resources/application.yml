@@ -7,7 +7,7 @@ odbitappsrabbitmq:
   publish:
     queueName: itapps/point
     payload: '{"Test1": 10},{"Test2": 10},{"Test3": 10}'
-    path: 'campus/building/dnps,campus/building/substation,campus/building/rtac'
+    path: 'campus/building/dnp3,campus/building/substation,campus/building/rtac'
     routingKey: dnp3.point
     topicExchangeName: itapps-dnp3-pub-exchange
   subscribe:
