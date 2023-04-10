@@ -13,6 +13,7 @@
     <modules>
         <module>odb-it-apps-zmq</module>
         <module>odb-it-apps-rabbitmq</module>
+        <module>odb-it-apps-asb</module>
     </modules>
     <dependencyManagement>
         <dependencies>
